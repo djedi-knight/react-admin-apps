@@ -1,2 +1,2 @@
-# react-admin-demos
-Demo applications using the react-admin framework
+# react-admin-apps
+A coolection of applications using the react-admin framework
