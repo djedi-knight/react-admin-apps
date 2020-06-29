@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.post(`/users`, async (req, res) => {
   // Deserialize the request
   const { email, name } = req.body;
-  // Create the user
+  // Create the entity
   const result = await prisma.user.create({
     data: {
       email,
@@ -26,21 +26,23 @@ app.get(`/users`, async (_, res) => {
   const result = await prisma.user.findMany();
   // Set headers
   res.set("x-total-count", result.length.toString());
-  // Return result
+  // Return the result
   res.json(result);
 });
 
 app.post(`/posts`, async (req, res) => {
   // Deserialize the request
-  const { title, content, authorEmail } = req.body;
+  const { title, content, authorId } = req.body;
+  // Create the entity
   const result = await prisma.post.create({
     data: {
       title,
       content,
       published: false,
-      author: { connect: { email: authorEmail } },
+      author: { connect: { id: authorId } },
     },
   });
+  // Return the result
   res.json(result);
 });
 
@@ -49,7 +51,7 @@ app.get(`/posts`, async (_, res) => {
   const result = await prisma.post.findMany();
   // Set headers
   res.set("x-total-count", result.length.toString());
-  // Return result
+  // Return the result
   res.json(result);
 });
 

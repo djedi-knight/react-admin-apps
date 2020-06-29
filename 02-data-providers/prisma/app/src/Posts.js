@@ -32,11 +32,11 @@ const PostFilter = (props) => (
 export const PostCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput source="userId" reference="users">
+      <ReferenceInput source="authorId" reference="users">
         <SelectInput optionText="name" />
       </ReferenceInput>
       <TextInput source="title" />
-      <TextInput multiline source="body" />
+      <TextInput multiline source="content" />
     </SimpleForm>
   </Create>
 );
