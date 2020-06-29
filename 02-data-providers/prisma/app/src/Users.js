@@ -9,8 +9,6 @@ import {
   TextInput,
 } from "react-admin";
 
-import MyUrlField from "./MyUrlField";
-
 export const UserCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
@@ -26,9 +24,6 @@ export const UserList = (props) => (
       <TextField source="id" />
       <TextField source="name" />
       <EmailField source="email" />
-      <TextField source="phone" />
-      <MyUrlField source="website" />
-      <TextField source="company.name" />
     </Datagrid>
   </List>
 );
