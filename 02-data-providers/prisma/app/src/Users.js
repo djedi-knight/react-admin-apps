@@ -15,7 +15,7 @@ export const UserCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="email" />
-      <TextInput multiline source="name" />
+      <TextInput source="name" />
     </SimpleForm>
   </Create>
 );

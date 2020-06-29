@@ -7,6 +7,20 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.post(`/users`, async (req, res) => {
+  // Deserialize the request
+  const { email, name } = req.body;
+  // Create the user
+  const result = await prisma.user.create({
+    data: {
+      email,
+      name,
+    },
+  });
+  // Return the result
+  res.json(result);
+});
+
 app.get(`/users`, async (_, res) => {
   // Get data
   const result = await prisma.user.findMany();
@@ -24,15 +38,6 @@ app.get(`/posts`, async (_, res) => {
   // Return result
   res.json(result);
 });
-
-// app.post(`/user`, async (req, res) => {
-//   const result = await prisma.user.create({
-//     data: {
-//       ...req.body,
-//     },
-//   });
-//   res.json(result);
-// });
 
 // app.post(`/post`, async (req, res) => {
 //   const { title, content, authorEmail } = req.body;
