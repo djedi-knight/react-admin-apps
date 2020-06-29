@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post(`/users`, async (req, res) => {
-  // Deserialize the request
+  // Deserialize the request body
   const { email, name } = req.body;
   // Create the entity
   const result = await prisma.user.create({
@@ -22,16 +22,16 @@ app.post(`/users`, async (req, res) => {
 });
 
 app.get(`/users`, async (_, res) => {
-  // Get data
+  // Get the data
   const result = await prisma.user.findMany();
-  // Set headers
+  // Set the headers
   res.set("x-total-count", result.length.toString());
   // Return the result
   res.json(result);
 });
 
 app.post(`/posts`, async (req, res) => {
-  // Deserialize the request
+  // Deserialize the request body
   const { title, content, authorId } = req.body;
   // Create the entity
   const result = await prisma.post.create({
@@ -47,10 +47,23 @@ app.post(`/posts`, async (req, res) => {
 });
 
 app.get(`/posts`, async (_, res) => {
-  // Get data
+  // Get the data
   const result = await prisma.post.findMany();
   // Set headers
   res.set("x-total-count", result.length.toString());
+  // Return the result
+  res.json(result);
+});
+
+app.get(`/posts/:id`, async (req, res) => {
+  // Deserialize the request params
+  const { id } = req.params;
+  // Get the data
+  const result = await prisma.post.findOne({
+    where: {
+      id: Number(id),
+    },
+  });
   // Return the result
   res.json(result);
 });
@@ -67,16 +80,6 @@ app.get(`/posts`, async (_, res) => {
 // app.delete(`/post/:id`, async (req, res) => {
 //   const { id } = req.params;
 //   const post = await prisma.post.delete({
-//     where: {
-//       id: Number(id),
-//     },
-//   });
-//   res.json(post);
-// });
-
-// app.get(`/post/:id`, async (req, res) => {
-//   const { id } = req.params;
-//   const post = await prisma.post.findOne({
 //     where: {
 //       id: Number(id),
 //     },
