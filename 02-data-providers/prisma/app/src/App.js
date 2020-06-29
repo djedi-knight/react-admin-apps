@@ -8,7 +8,7 @@ import authProvider from './authProvider';
 // import dataProvider from './dataProvider';
 import Dashboard from './Dashboard';
 import { PostCreate, PostEdit, PostList } from "./Posts";
-import { UserList } from "./Users";
+import { UserCreate, UserList } from "./Users";
 
 // Setup data provider
 // const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
@@ -18,7 +18,7 @@ const dataProvider = jsonServerProvider("http://localhost:3001");
 const App = () => (
   <Admin authProvider={authProvider} dataProvider={dataProvider} dashboard={Dashboard}>
     <Resource name="posts" create={PostCreate} edit={PostEdit} list={PostList} icon={PostIcon} />
-    <Resource name="users" list={UserList} icon={UserIcon} />
+    <Resource name="users" create={UserCreate} list={UserList} icon={UserIcon} />
   </Admin>
 );
 

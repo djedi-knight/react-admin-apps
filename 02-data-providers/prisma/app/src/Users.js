@@ -1,7 +1,24 @@
 import * as React from "react";
-import { List, Datagrid, TextField, EmailField } from "react-admin";
+import {
+  Create,
+  Datagrid,
+  EmailField,
+  List,
+  SimpleForm,
+  TextField,
+  TextInput,
+} from "react-admin";
 
 import MyUrlField from "./MyUrlField";
+
+export const UserCreate = (props) => (
+  <Create {...props}>
+    <SimpleForm>
+      <TextInput source="email" />
+      <TextInput multiline source="name" />
+    </SimpleForm>
+  </Create>
+);
 
 export const UserList = (props) => (
   <List {...props}>
