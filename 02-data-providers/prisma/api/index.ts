@@ -61,6 +61,19 @@ app.put("/users/:id", async (req, res) => {
   res.json(result);
 });
 
+app.delete(`/users/:id`, async (req, res) => {
+  // Deserialize the request params
+  const { id } = req.params;
+  // Delete the entity
+  const result = await prisma.user.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+  // Return the result
+  res.json(result);
+});
+
 // Posts APIs
 
 app.get(`/posts`, async (_, res) => {
