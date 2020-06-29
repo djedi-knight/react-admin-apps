@@ -146,6 +146,21 @@ app.delete(`/posts/:id`, async (req, res) => {
   res.json(result);
 });
 
+// Error catch-all
+
+app.use(
+  (
+    err: any,
+    req: any,
+    res: any,
+    next: any
+  ) => {
+    console.log("in error method");
+    res.status(500);
+    res.render("error", { error: err });
+  }
+);
+
 const server = app.listen(3001, () =>
   console.log("🚀 Server ready at: http://localhost:3001")
 );
