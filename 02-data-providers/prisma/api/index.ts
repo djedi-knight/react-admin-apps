@@ -7,6 +7,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+// Users APIs
+
+app.get(`/users`, async (_, res) => {
+  // Get the data
+  const result = await prisma.user.findMany();
+  // Set the headers
+  res.set("x-total-count", result.length.toString());
+  // Return the result
+  res.json(result);
+});
+
 app.post(`/users`, async (req, res) => {
   // Deserialize the request body
   const { email, name } = req.body;
@@ -21,10 +32,12 @@ app.post(`/users`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/users`, async (_, res) => {
+// Posts APIs
+
+app.get(`/posts`, async (_, res) => {
   // Get the data
-  const result = await prisma.user.findMany();
-  // Set the headers
+  const result = await prisma.post.findMany();
+  // Set headers
   res.set("x-total-count", result.length.toString());
   // Return the result
   res.json(result);
@@ -40,6 +53,19 @@ app.post(`/posts`, async (req, res) => {
       content,
       published: false,
       author: { connect: { id: authorId } },
+    },
+  });
+  // Return the result
+  res.json(result);
+});
+
+app.get(`/posts/:id`, async (req, res) => {
+  // Deserialize the request params
+  const { id } = req.params;
+  // Get the data
+  const result = await prisma.post.findOne({
+    where: {
+      id: Number(id),
     },
   });
   // Return the result
@@ -65,20 +91,11 @@ app.put("/posts/:id", async (req, res) => {
   res.json(result);
 });
 
-app.get(`/posts`, async (_, res) => {
-  // Get the data
-  const result = await prisma.post.findMany();
-  // Set headers
-  res.set("x-total-count", result.length.toString());
-  // Return the result
-  res.json(result);
-});
-
-app.get(`/posts/:id`, async (req, res) => {
+app.delete(`/posts/:id`, async (req, res) => {
   // Deserialize the request params
   const { id } = req.params;
-  // Get the data
-  const result = await prisma.post.findOne({
+  // Delete the entity
+  const result = await prisma.post.delete({
     where: {
       id: Number(id),
     },
@@ -86,16 +103,6 @@ app.get(`/posts/:id`, async (req, res) => {
   // Return the result
   res.json(result);
 });
-
-// app.delete(`/post/:id`, async (req, res) => {
-//   const { id } = req.params;
-//   const post = await prisma.post.delete({
-//     where: {
-//       id: Number(id),
-//     },
-//   });
-//   res.json(post);
-// });
 
 // app.get("/feed", async (req, res) => {
 //   const posts = await prisma.post.findMany({
