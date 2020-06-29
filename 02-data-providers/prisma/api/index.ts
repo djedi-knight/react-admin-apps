@@ -32,6 +32,35 @@ app.post(`/users`, async (req, res) => {
   res.json(result);
 });
 
+app.get(`/users/:id`, async (req, res) => {
+  // Deserialize the request params
+  const { id } = req.params;
+  // Get the data
+  const result = await prisma.user.findOne({
+    where: {
+      id: Number(id),
+    },
+  });
+  // Return the result
+  res.json(result);
+});
+
+app.put("/users/:id", async (req, res) => {
+  // Deserialize the request params
+  const { id } = req.params;
+  // Deserialize the request body
+  const { name } = req.body;
+  // Update the entity
+  const result = await prisma.user.update({
+    where: { id: Number(id) },
+    data: {
+      name,
+    },
+  });
+  // Return the result
+  res.json(result);
+});
+
 // Posts APIs
 
 app.get(`/posts`, async (_, res) => {
@@ -103,35 +132,6 @@ app.delete(`/posts/:id`, async (req, res) => {
   // Return the result
   res.json(result);
 });
-
-// app.get("/feed", async (req, res) => {
-//   const posts = await prisma.post.findMany({
-//     where: { published: true },
-//     include: { author: true },
-//   });
-//   res.json(posts);
-// });
-
-// app.get("/filterPosts", async (req, res) => {
-//   const { searchString }: { searchString?: string } = req.query;
-//   const draftPosts = await prisma.post.findMany({
-//     where: {
-//       OR: [
-//         {
-//           title: {
-//             contains: searchString,
-//           },
-//         },
-//         {
-//           content: {
-//             contains: searchString,
-//           },
-//         },
-//       ],
-//     },
-//   });
-//   res.json(draftPosts);
-// });
 
 const server = app.listen(3001, () =>
   console.log("🚀 Server ready at: http://localhost:3001")

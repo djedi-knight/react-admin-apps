@@ -3,7 +3,6 @@ import {
   Create,
   Datagrid,
   Edit,
-  EditButton,
   Filter,
   List,
   ReferenceInput,
@@ -54,12 +53,11 @@ export const PostEdit = (props) => (
 
 export const PostList = (props) => (
   <List filters={<PostFilter />} {...props}>
-    <Datagrid>
+    <Datagrid rowClick="edit">
       <ReferenceField source="authorId" reference="users">
         <TextField source="name" />
       </ReferenceField>
       <TextField source="title" />
-      <EditButton />
     </Datagrid>
   </List>
 );
