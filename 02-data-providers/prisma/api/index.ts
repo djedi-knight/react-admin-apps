@@ -11,7 +11,16 @@ app.get(`/users`, async (_, res) => {
   // Get data
   const result = await prisma.user.findMany();
   // Set headers
-  res.set("x-total-count", "0");
+  res.set("x-total-count", result.length.toString());
+  // Return result
+  res.json(result);
+});
+
+app.get(`/posts`, async (_, res) => {
+  // Get data
+  const result = await prisma.post.findMany();
+  // Set headers
+  res.set("x-total-count", result.length.toString());
   // Return result
   res.json(result);
 });
