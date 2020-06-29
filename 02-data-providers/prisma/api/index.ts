@@ -8,9 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get(`/users`, async (_, res) => {
-  // Get all users
+  // Get data
   const result = await prisma.user.findMany();
-  // Return users
+  // Set headers
+  res.set("x-total-count", "0");
+  // Return result
   res.json(result);
 });
 
@@ -95,7 +97,5 @@ app.get(`/users`, async (_, res) => {
 // });
 
 const server = app.listen(3001, () =>
-  console.log(
-    "🚀 Server ready at: http://localhost:3001"
-  )
+  console.log("🚀 Server ready at: http://localhost:3001")
 );
