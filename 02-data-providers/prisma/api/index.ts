@@ -94,8 +94,8 @@ app.get(`/users`, async (_, res) => {
 //   res.json(draftPosts);
 // });
 
-const server = app.listen(3000, () =>
+const server = app.listen(3001, () =>
   console.log(
-    "🚀 Server ready at: http://localhost:3000"
+    "🚀 Server ready at: http://localhost:3001"
   )
 );
