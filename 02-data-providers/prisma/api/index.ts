@@ -46,6 +46,25 @@ app.post(`/posts`, async (req, res) => {
   res.json(result);
 });
 
+app.put("/posts/:id", async (req, res) => {
+  // Deserialize the request params
+  const { id } = req.params;
+  // Deserialize the request body
+  const { title, content, authorId } = req.body;
+  // Update the entity
+  const result = await prisma.post.update({
+    where: { id: Number(id) },
+    data: {
+      title,
+      content,
+      published: false,
+      author: { connect: { id: authorId } },
+    },
+  });
+  // Return the result
+  res.json(result);
+});
+
 app.get(`/posts`, async (_, res) => {
   // Get the data
   const result = await prisma.post.findMany();
@@ -67,15 +86,6 @@ app.get(`/posts/:id`, async (req, res) => {
   // Return the result
   res.json(result);
 });
-
-// app.put("/publish/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const post = await prisma.post.update({
-//     where: { id: Number(id) },
-//     data: { published: true },
-//   });
-//   res.json(post);
-// });
 
 // app.delete(`/post/:id`, async (req, res) => {
 //   const { id } = req.params;
